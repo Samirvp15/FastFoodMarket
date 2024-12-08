@@ -14,17 +14,50 @@ datasource db {
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
-  name String
-  slug String
+  id       Int       @id @default(autoincrement())
+  name     String
+  slug     String
   products Product[]
 }
 
 model Product {
-  id    Int    @id @default(autoincrement())
-  name  String
-  price Float
-  image String
+  id         Int      @id @default(autoincrement())
+  name       String
+  price      Float
+  image      String
   categoryId Int
-  category Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+  orderItems OrderProducts[]
+}
+
+// RELACION MUCHOS A MUCHOS (TABLA PIVOTE=>OrderProducts)
+// UNA ORDEN PUEDE TENER UNO O MUCHOS PRODUCTOS 
+// Y UN PRODUCTO PUEDE ESTAR CONTENIDO EN UNA O MUCHAS ORDENES
+// EJEMPLO:
+// ORDER 1 |   PIZZA MEDIANA
+// ORDER 1 |   GALLETA TOSTADA
+// ORDER 1 |   PASTEL FRESA
+// ORDER 1 |   HAMBURGUESA GRANDE
+
+// ORDER 2 |   GALLETA TOSTADA
+// ORDER 2 |   DONA INGLESA
+// ORDER 2 |   HAMBURGUESA GRANDE
+
+model Order {
+  id           Int       @id @default(autoincrement())
+  name         String
+  total        Float
+  date         DateTime  @default(now())
+  status       Boolean   @default(false)
+  orderReadyAt DateTime?
+  orderProducts OrderProducts[]
+}
+
+model OrderProducts {
+  id Int @id @default(autoincrement())
+  orderId Int
+  order Order @relation(fields: [orderId], references: [id])
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+
 }
