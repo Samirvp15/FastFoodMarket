@@ -1,6 +1,8 @@
+import { useStore } from "@/src/store"
 import { OrderItem } from "@/src/types"
 import { formatCurrency } from "@/src/utils"
 import { MinusIcon, PlusIcon, XCircleIcon } from "@heroicons/react/20/solid"
+import { useMemo } from "react"
 
 
 
@@ -8,8 +10,16 @@ type ProductDetailsProps = {
   item: OrderItem
 }
 
+const MIN_ITEMS = 1
+const MAX_ITEMS = 5
+
 
 export default function ProductDetails({item}: ProductDetailsProps) {
+
+  const {increaseQuantity, decreaseQuantity} = useStore()
+  const disableDecreaseButton = useMemo(()=> item.quantity === MIN_ITEMS, [item])
+  const disableIncreaseButton = useMemo(()=> item.quantity === MAX_ITEMS, [item])
+
   return (
     <div className="shadow space-y-1 p-4 bg-white  border-t border-gray-200 ">
     <div className="space-y-4">
@@ -29,7 +39,9 @@ export default function ProductDetails({item}: ProductDetailsProps) {
       <div className="flex gap-5 px-10 py-2 bg-gray-100 w-fit rounded-lg">
           <button
             type="button"
-            onClick={() => {}}
+            className=" disabled:opacity-20"
+            disabled={disableDecreaseButton}
+            onClick={() => decreaseQuantity(item.id)}
           >
               <MinusIcon className="h-6 w-6"/>
           </button>
@@ -40,7 +52,9 @@ export default function ProductDetails({item}: ProductDetailsProps) {
   
           <button
              type="button"
-             onClick={() => {}}
+             className=" disabled:opacity-10"
+             disabled={disableIncreaseButton}
+             onClick={() => increaseQuantity(item.id)}
           >
               <PlusIcon className="h-6 w-6"/>
           </button>
