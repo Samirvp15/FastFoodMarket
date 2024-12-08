@@ -1,3 +1,4 @@
+import { completeOrder } from "@/actions/complete-order-action"
 import { OrderWithProducts } from "@/src/types"
 import { formatCurrency } from "@/src/utils"
 
@@ -9,6 +10,7 @@ type OrderCardProps = {
 
 
 export default function OrderCard({ order }: OrderCardProps) {
+
 
     return (
         <section
@@ -35,7 +37,12 @@ export default function OrderCard({ order }: OrderCardProps) {
                 </div>
             </dl>
 
-            <form>
+            <form action={completeOrder}>
+                <input
+                    type="hidden"
+                    name="order_id"
+                    value={order.id}
+                />
                 <input
                     type="submit"
                     className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer"
