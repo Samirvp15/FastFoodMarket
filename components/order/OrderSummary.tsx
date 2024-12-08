@@ -15,8 +15,8 @@ export default function OrderSummary() {
     const total = useMemo(() => order.reduce((total, item) =>
         total + (item.quantity * item.price), 0), [order])
 
-    const handleCreateOrder = () =>{
-        console.log('xd')
+    const handleCreateOrder = (formData: FormData) => {
+        console.log(formData.get('name'))
         createOrder()
     }
 
@@ -38,7 +38,15 @@ export default function OrderSummary() {
                     </p>
 
                     <form className=" w-full mt-10 space-y-5"
-                     action={handleCreateOrder}>
+                        action={handleCreateOrder}>
+
+                        <input
+                            type="text"
+                            placeholder="Tu Nombre"
+                            className=" bg-white border border-gray-100 p-2 w-full"
+                            name="name"
+                        />
+
                         <input
                             type="submit"
                             className=" py-2 rounded uppercase text-white bg-black w-full text-center
