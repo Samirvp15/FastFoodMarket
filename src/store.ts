@@ -34,7 +34,7 @@ export const useStore = create<Store>((set, get) => ({
         }
 
         set(() => ({
-            order: order
+            order
         }))
     }
 }))
