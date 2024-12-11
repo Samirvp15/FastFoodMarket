@@ -54,7 +54,7 @@ export default function ImageUpload() {
                     <input
                         type="hidden"
                         name='image'
-                        value={imageUrl}
+                        value={imageUrl || ""}
                     />
                 </>
             )}
