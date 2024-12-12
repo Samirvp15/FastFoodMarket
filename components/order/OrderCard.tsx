@@ -7,7 +7,12 @@ type OrderCardProps = {
     order: OrderWithProducts
 }
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()  // Prevenir el comportamiento predeterminado de envío del formulario
 
+        const formData = new FormData(e.target as HTMLFormElement) // Obtener los datos del formulario
+        completeOrder(formData)  // Llamar a la función que maneja la creación del pedido
+    }
 
 export default function OrderCard({ order }: OrderCardProps) {
 
@@ -37,7 +42,7 @@ export default function OrderCard({ order }: OrderCardProps) {
                 </div>
             </dl>
 
-            <form action={completeOrder}>
+            <form onSubmit={handleSubmit}>
                 <input
                     type="hidden"
                     name="order_id"

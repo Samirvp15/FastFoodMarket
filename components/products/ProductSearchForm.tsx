@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 
 export default function ProductSearchForm() {
 
-    const handleSearchForm = (formData: FormData) => {
+    const handleProductSearchForm = (formData: FormData) => {
         const data = {
             search: formData.get('search')
         }
@@ -23,10 +23,17 @@ export default function ProductSearchForm() {
 
     }
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()  // Prevenir el comportamiento predeterminado de envío del formulario
+
+        const formData = new FormData(e.target as HTMLFormElement) // Obtener los datos del formulario
+        handleProductSearchForm(formData)  // Llamar a la función que maneja la creación del pedido
+    }
+
 
     return (
         <form
-            action={handleSearchForm}
+            onSubmit={handleSubmit}
             className=' flex items-center'>
             <input
                 type="text"

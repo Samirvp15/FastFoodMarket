@@ -13,7 +13,7 @@ export default function EditProductForm({ children }: { children: React.ReactNod
     const params = useParams()
     const id = +params.id!
 
-    const handleSubmit = async (formData: FormData) => {
+    const handleEditProductForm = async (formData: FormData) => {
         const data = {
             name: formData.get('name'),
             price: formData.get('price'),
@@ -43,11 +43,18 @@ export default function EditProductForm({ children }: { children: React.ReactNod
         router.push('/admin/products')
     }
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()  // Prevenir el comportamiento predeterminado de envío del formulario
+
+        const formData = new FormData(e.target as HTMLFormElement) // Obtener los datos del formulario
+        handleEditProductForm(formData)  // Llamar a la función que maneja la creación del pedido
+    }
+
     return (
         <div className=' bg-white mt-10 px-5 py-10 rounded-md shadow-md max-w-3xl mx-auto'>
             <form
                 className=' space-y-5'
-                action={handleSubmit}
+                onSubmit={handleSubmit}
             >
                 {children}
                 <input
