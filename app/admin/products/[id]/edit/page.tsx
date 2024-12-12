@@ -3,7 +3,6 @@ import ProductForm from "@/components/products/ProductForm"
 import GoBackButton from "@/components/ui/GoBackButton"
 import Heading from "@/components/ui/Heading"
 import { prisma } from "@/src/lib/prisma"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 
 
@@ -22,9 +21,9 @@ async function getProductById(id: number) {
 }
 
 
-export default async function EditProductsPage({ params }: { params: { id: string } }) {
+export default async function EditProductsPage({ params }: { params: Promise<{ id: string }> }) {
 
-    const product = await getProductById(+params.id)
+    const product = await getProductById(+(await params).id)
 
     return (
         <>

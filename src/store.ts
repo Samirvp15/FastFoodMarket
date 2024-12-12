@@ -3,11 +3,20 @@ import { OrderItem } from "./types";
 import { Product } from "@prisma/client";
 
 
+export type ProductItem = {
+
+        name: string;
+        id: number;
+        price: number;
+        image?: string;
+        categoryId?: number;
+    
+}
 
 
 interface Store {
     order: OrderItem[],
-    addToOrder: (product: Product) => void,
+    addToOrder: (product: ProductItem) => void,
     increaseQuantity: (id: Product['id']) => void,
     decreaseQuantity: (id: Product['id']) => void,
     removeItem: (id: Product['id']) => void,
@@ -18,7 +27,8 @@ interface Store {
 export const useStore = create<Store>((set, get) => ({
     order: [],
     addToOrder: (product) => {
-        const { categoryId, image, ...data } = product
+        //const { data } = product
+
         let order: OrderItem[] = []
 
         //  PARA EVITAR ITEMS DUPLICADOS
@@ -31,9 +41,9 @@ export const useStore = create<Store>((set, get) => ({
             } : item)
         } else {
             order = [...get().order, {
-                ...data,
+                ...product,
                 quantity: 1,
-                subtotal: 1 * data.price
+                subtotal: 1 * product.price
             }]
         }
 

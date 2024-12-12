@@ -78,6 +78,8 @@ export default function OrderSummary() {
                             className=" py-2 rounded uppercase text-white bg-black w-full text-center
                                 cursor-pointer font-bold"
                             value="Confirmar Pedido"
+                            
+                            
                         />
                     </form>
 

@@ -1,20 +1,21 @@
-import { prisma } from "@/src/lib/prisma"
+import { getCategories } from "@/actions/get-categories-action"
 import ImageUpload from "./ImageUpload"
 import { Product } from "@prisma/client"
 
 
-async function getCategories() {
-    return await prisma.category.findMany()
+async function getCategoriesFromAction() {
+    return await getCategories()
 }
 
 type ProductFormProps = {
     product?: Product
 }
 
+const categories = await getCategoriesFromAction()
 
-export default async function ProductForm({product}: ProductFormProps) {
+export default function ProductForm({product}: ProductFormProps): JSX.Element{
 
-    const categories = await getCategories()
+
 
     return (
         <>

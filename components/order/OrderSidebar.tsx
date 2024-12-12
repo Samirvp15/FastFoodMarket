@@ -1,15 +1,15 @@
-import { prisma } from '@/src/lib/prisma'
+import { getCategories } from '@/actions/get-categories-action'
 import CategoryIcon from '../ui/CategoryIcon'
 import Logo from '../ui/Logo'
 
-async function getCategories() {
-  return await prisma.category.findMany()
+async function getCategoriesFromAction() {
+    return await getCategories()
 }
 
+const categories = await getCategoriesFromAction()
 
-export default async function OrderSidebar() {
+export default  function OrderSidebar() {
 
-  const categories = await getCategories()
 
   return (
     <aside className=" md:w-72 md:h-screen bg-white">

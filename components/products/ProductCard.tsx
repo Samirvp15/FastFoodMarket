@@ -1,18 +1,19 @@
 import { formatCurrency, getImagePath } from "@/src/utils"
-import { Product } from "@prisma/client"
+//import { Product } from "@prisma/client"
 import Image from "next/image"
 import AddProductButton from "./AddProductButton"
+import { ProductItem } from "@/src/store"
 
 
 
 type ProductCardProps = {
-    product: Product
+    product: ProductItem
 }
 
 
 export default function ProductCard({ product }: ProductCardProps) {
 
-    const imagePath = getImagePath(product.image)
+    const imagePath = getImagePath(product.image!)
 
     return (
         <>
